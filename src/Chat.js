@@ -1,6 +1,5 @@
 import { Avatar, IconButton } from '@material-ui/core';
-import { AttachFile, SearchOutlined } from '@material-ui/icons';
-import MoreVert from '@material-ui/icons/MoreVert';
+import { AttachFile, MoreVert, SearchOutlined } from '@material-ui/icons';
 import React,{useEffect , useState} from 'react';
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import MicIcon from "@material-ui/icons/Mic";
@@ -8,20 +7,20 @@ import "./Chat.css";
 import { useParams } from 'react-router-dom';
 import db from './firebase';
 function Chat() {
-    const [input, setInput]=useState("");
+    const [input, setInput] = useState("");
     const { roomId } = useParams();
-    const {roomName, SetRoomName} = useState("");
+    const [roomName, setRoomName] = useState("");
 
     useEffect(() => {
         
             if(roomId){
-                db.collection('rooms').doc(roomId).onSnapshot(snapshot =>
-                    (
-                        SetRoomName(snapshot.data().name)
-                    ))
+                
+                db.collection('rooms').doc(roomId).onSnapshot((snapshot) => 
+                setRoomName(snapshot.data().name));
             }
         
-    }, [roomId])
+    }, [roomId]);
+
     const sendMessage =(e)=>{
         e.preventDefault();
         console.log('Typed',input);
